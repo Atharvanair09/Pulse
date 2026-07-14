@@ -7,7 +7,7 @@ const NAV_ITEMS = [
   { name: "Dashboard", href: "/dashboard", icon: "space_dashboard" },
   { name: "Map", href: "/map", icon: "map" },
   { name: "Assistant", href: "/assistant", icon: "smart_toy" },
-  { name: "Alerts", href: "/alerts", icon: "notifications" },
+  { name: "Notifications", href: "/notifications", icon: "notifications" },
   { name: "Profile", href: "/profile", icon: "person" },
 ];
 

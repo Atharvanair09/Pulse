@@ -29,6 +29,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { VenueContextProvider } from "@/context/VenueContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -45,9 +47,11 @@ export default function RootLayout({
       <body className="min-h-screen bg-background text-foreground transition-colors duration-200">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ServiceWorkerRegister />
-          <AppShell>
-            {children}
-          </AppShell>
+          <VenueContextProvider>
+            <AppShell>
+              {children}
+            </AppShell>
+          </VenueContextProvider>
         </ThemeProvider>
       </body>
     </html>
