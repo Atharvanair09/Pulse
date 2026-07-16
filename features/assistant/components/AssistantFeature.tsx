@@ -1,7 +1,10 @@
 export function AssistantFeature() {
   return (
     <div className="p-4 md:p-8 max-w-3xl mx-auto h-[calc(100vh-4rem)] md:h-screen flex flex-col">
-      <h1 className="text-3xl font-bold mb-6">AI Assistant</h1>
+      <header className="mb-6">
+        <h1 className="text-3xl font-bold">AI Assistant</h1>
+        <p className="text-foreground/60 text-sm mt-1">Chat with Pulse&apos;s venue intelligence.</p>
+      </header>
       
       <div className="flex-1 bg-background border border-black/10 dark:border-white/10 rounded-2xl flex flex-col overflow-hidden mb-4">
         <div className="flex-1 p-6 flex flex-col overflow-y-auto">
@@ -10,7 +13,7 @@ export function AssistantFeature() {
               <span className="material-symbols-rounded text-primary text-sm">smart_toy</span>
             </div>
             <div className="bg-primary/5 p-4 rounded-2xl rounded-tl-none border border-primary/10 text-sm">
-              <p>Hello! I'm your Pulse AI Assistant. How can I help you navigate the venue today?</p>
+              <p>Hello! I&apos;m your Pulse AI Assistant. How can I help you navigate the venue today?</p>
             </div>
           </div>
         </div>

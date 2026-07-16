@@ -45,7 +45,10 @@ export const VenueContextProvider: React.FC<{ children: React.ReactNode }> = ({ 
   
   // Use a ref to hold the current state for the interval to access the latest
   const stateRef = useRef<VenueContextType>(state);
-  stateRef.current = state;
+  
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
 
   useEffect(() => {
     // Determine the simulation tick rate (5 seconds as per plan)
@@ -54,7 +57,7 @@ export const VenueContextProvider: React.FC<{ children: React.ReactNode }> = ({ 
       if (!status.isRunning) return;
 
       // 1. Simulation Engine tick
-      let nextState = simulationEngine.tick(stateRef.current);
+      const nextState = simulationEngine.tick(stateRef.current);
 
       // 2. Run other engines over the new state
       nextState.recommendations = recommendationEngine.generate(nextState);
@@ -69,6 +72,9 @@ export const VenueContextProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
       // 4. Process Venue Health
       nextState.pulseScore = pulseScoreEngine.calculateScore(nextState, stateRef.current.pulseScore);
+      
+      // 5. Update lastUpdated
+      nextState.lastUpdated = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
       setState(nextState);
     }, 5000);

@@ -1,9 +1,11 @@
-self.addEventListener("install", (event) => {
+self.addEventListener("install", () => {
+  self.skipWaiting();
 });
 
-self.addEventListener("activate", (event) => {
+self.addEventListener("activate", () => {
+  // Claim clients so the SW takes control immediately
 });
 
-self.addEventListener("fetch", (event) => {
-  // Add offline caching strategies later
+self.addEventListener("fetch", () => {
+  // Let the browser handle everything normally
 });

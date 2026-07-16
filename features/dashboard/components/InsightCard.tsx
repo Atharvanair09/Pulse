@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Insight } from "@/types";
 
 export interface InsightCardProps {
@@ -6,44 +6,49 @@ export interface InsightCardProps {
   isLoading?: boolean;
 }
 
-export function InsightCard({ insights, isLoading = false }: InsightCardProps) {
+export const InsightCard = memo(function InsightCard({ insights, isLoading = false }: InsightCardProps) {
+  const topInsight = insights[0];
+
   return (
-    <div className="bg-background border border-black/10 dark:border-white/10 p-6 rounded-2xl md:col-span-2 flex flex-col">
-      <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-        <span className="material-symbols-rounded text-primary">tips_and_updates</span>
-        AI Insights
-      </h2>
-      <div className="flex-1 space-y-4 max-h-[300px] overflow-y-auto">
+    <div className="bg-background border border-black/10 dark:border-white/10 p-6 rounded-2xl md:col-span-2 flex flex-col justify-between" aria-label="AI Insight">
+      <div>
+        <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+          <span className="material-symbols-rounded text-primary" aria-hidden="true">tips_and_updates</span>
+          AI Insight
+        </h2>
         {isLoading ? (
-          <div className="space-y-4 animate-pulse">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="p-4 rounded-xl bg-primary/5 border border-primary/10">
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary/20 shrink-0"></div>
-                  <div className="flex-1">
-                    <div className="h-5 w-1/3 bg-primary/20 rounded mb-2"></div>
-                    <div className="h-4 w-full bg-primary/10 rounded"></div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="animate-pulse space-y-3" aria-label="Loading insight">
+            <div className="h-6 w-1/3 bg-black/10 dark:bg-white/10 rounded"></div>
+            <div className="h-4 w-full bg-black/10 dark:bg-white/10 rounded"></div>
+            <div className="h-4 w-2/3 bg-black/10 dark:bg-white/10 rounded"></div>
           </div>
-        ) : insights.length === 0 ? (
-          <p className="text-sm text-foreground/50 italic">No recent insights.</p>
+        ) : !topInsight ? (
+          <p className="text-sm text-foreground/60 italic">No insights available at this time.</p>
         ) : (
-          insights.map(insight => (
-            <div key={insight.id} className="p-4 rounded-xl bg-primary/5 border border-primary/10">
-              <div className="flex items-start gap-3">
-                <span className="material-symbols-rounded text-primary">info</span>
-                <div>
-                  <h4 className="font-medium text-foreground mb-1">{insight.category}</h4>
-                  <p className="text-sm text-foreground/80">{insight.explanation}</p>
-                </div>
-              </div>
-            </div>
-          ))
+          <div className="space-y-2">
+            <h4 className="font-bold text-lg text-primary">{topInsight.category}</h4>
+            <p className="text-foreground/80 leading-relaxed">
+              {topInsight.explanation}
+            </p>
+          </div>
         )}
       </div>
+
+      {!isLoading && topInsight && (
+        <div className="mt-6 pt-4 border-t border-black/5 dark:border-white/5 flex justify-between items-center text-xs text-foreground/50">
+          <span className="flex items-center gap-1">
+            <span className="material-symbols-rounded text-[14px]" aria-hidden="true">schedule</span>
+            {new Date(topInsight.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          </span>
+          <span className={`px-2 py-0.5 rounded font-medium ${
+            topInsight.confidence === "High" ? "bg-success/10 text-success" :
+            topInsight.confidence === "Medium" ? "bg-warning/10 text-warning" :
+            "bg-destructive/10 text-destructive"
+          }`}>
+            {topInsight.confidence} Confidence
+          </span>
+        </div>
+      )}
     </div>
   );
-}
+});

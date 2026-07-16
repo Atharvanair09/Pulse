@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+// eslint-disable-next-line @next/next/no-page-custom-font
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ServiceWorkerRegister } from "@/components/providers/ServiceWorkerRegister";
 import { AppShell } from "@/components/navigation/AppShell";

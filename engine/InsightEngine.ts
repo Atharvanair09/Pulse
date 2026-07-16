@@ -12,7 +12,8 @@ export class InsightEngine {
         id: `ins-north-gate-${context.simulationTick}`,
         category: "Crowd Dynamics",
         explanation: "North Gate congestion has reached critical levels due to the simultaneous arrival of two shuttle buses and limited open turnstiles.",
-        timestamp
+        timestamp,
+        confidence: "High"
       });
     }
 
@@ -23,7 +24,8 @@ export class InsightEngine {
         id: `ins-parking-${context.simulationTick}`,
         category: "Operations",
         explanation: "Main parking lot filled faster than expected because more attendees opted to drive rather than use the delayed Metro service.",
-        timestamp
+        timestamp,
+        confidence: "High"
       });
     }
 
@@ -34,7 +36,8 @@ export class InsightEngine {
         id: `ins-incident-${activeIncident.id}`,
         category: "Security",
         explanation: `A ${activeIncident.type.toLowerCase()} incident near ${activeIncident.location} is causing localized traffic redirection.`,
-        timestamp
+        timestamp,
+        confidence: "High"
       });
     }
 
@@ -44,7 +47,8 @@ export class InsightEngine {
         id: `ins-weather-${context.simulationTick}`,
         category: "Environment",
         explanation: "Severe weather conditions are driving attendees away from outdoor vendor areas and into the main concourse.",
-        timestamp
+        timestamp,
+        confidence: "Medium"
       });
     }
 

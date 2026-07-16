@@ -60,6 +60,12 @@ export class PredictionEngine {
       }
     }
 
+    // Sort predictions by confidence (High > Medium > Low)
+    const confidenceOrder = { High: 0, Medium: 1, Low: 2 };
+    predictions.sort((a, b) => {
+      return (confidenceOrder[a.confidence] ?? 3) - (confidenceOrder[b.confidence] ?? 3);
+    });
+
     return predictions;
   }
 }

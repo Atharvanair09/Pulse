@@ -51,7 +51,7 @@ export class NotificationEngine {
         if (!this.activeNotificationIds.has(notifId)) {
           newNotifications.push({
             id: notifId,
-            priority: inc.severity as any,
+            priority: inc.severity as "Critical" | "High" | "Medium" | "Low",
             title: `Incident: ${inc.type}`,
             message: inc.description,
             timestamp,

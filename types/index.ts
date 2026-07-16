@@ -145,6 +145,7 @@ export interface TimelineEvent {
   category: TimelineCategory;
   scheduledTime: string;
   description: string;
+  status?: "completed" | "current" | "upcoming";
 }
 
 export interface Route {
@@ -171,6 +172,7 @@ export interface Insight {
   category: string;
   explanation: string;
   timestamp: string;
+  confidence: ConfidenceLevel;
 }
 
 export interface PulseScore {
@@ -202,4 +204,5 @@ export interface VenueContext {
   simulationRunning?: boolean;
   
   pulseScore?: PulseScore;
+  lastUpdated?: string;
 }

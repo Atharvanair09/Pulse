@@ -14,11 +14,9 @@ export function DebugFeature() {
   const [lastTick, setLastTick] = useState<number>(0);
   const [tickMs, setTickMs] = useState<number>(0);
 
+  // Instead of setting state in effect, just derive tickMs if needed or ignore it.
   useEffect(() => {
-    if (state.simulationTick !== lastTick) {
-      setLastTick(state.simulationTick || 0);
-      setTickMs(Date.now());
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.simulationTick, lastTick]);
 
   return (

@@ -66,7 +66,7 @@ export function PulseRing({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center text-center">
+    <div className="flex flex-col items-center justify-center text-center" aria-label="Pulse Ring">
       <div 
         className={`relative ${sizeClasses[size]} mb-4`}
         role="progressbar"

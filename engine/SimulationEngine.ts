@@ -1,4 +1,4 @@
-import { VenueContext, CrowdZone, ParkingLot, Weather, Transport, Incident } from "../types";
+import { VenueContext } from "../types";
 
 export class SimulationEngine {
   private tickCount: number = 0;
@@ -119,7 +119,11 @@ export class SimulationEngine {
         { mode: "Bus", line: "Shuttle A", status: "On Time", delayMinutes: 0, estimatedArrival: new Date(Date.now() + 420000).toISOString() }
       ],
       incidents: [],
-      timeline: [],
+      timeline: [
+        { id: "tl-1", title: "Gates Open", category: "Gate", scheduledTime: new Date(Date.now() - 3600000).toISOString(), description: "All venue gates open for early access.", status: "completed" },
+        { id: "tl-2", title: "Pre-Show", category: "Match", scheduledTime: new Date(Date.now() + 1800000).toISOString(), description: "Pre-show entertainment begins.", status: "upcoming" },
+        { id: "tl-3", title: "Kickoff", category: "Match", scheduledTime: new Date(Date.now() + 3600000).toISOString(), description: "Main event kickoff.", status: "upcoming" }
+      ],
       recommendations: [],
       predictions: [],
       insights: [],
@@ -138,7 +142,7 @@ export class SimulationEngine {
     const now = new Date(currentState.simulatedTime || Date.now());
     now.setSeconds(now.getSeconds() + 30); // each tick simulates 30 seconds
 
-    let nextState = { ...currentState };
+    const nextState = { ...currentState };
     nextState.simulatedTime = now.toISOString();
     nextState.simulationTick = this.tickCount;
     nextState.simulationRunning = this.isRunning;
@@ -216,6 +220,18 @@ export class SimulationEngine {
         return t;
       });
     }
+
+    // Update timeline status
+    nextState.timeline = currentState.timeline.map((event, idx, arr) => {
+      const isPast = new Date(event.scheduledTime) < now;
+      const isCurrent = !isPast && (idx === 0 || new Date(arr[idx - 1].scheduledTime) < now);
+      
+      let status: "completed" | "current" | "upcoming" = "upcoming";
+      if (isPast) status = "completed";
+      else if (isCurrent) status = "current";
+      
+      return { ...event, status };
+    });
 
     // Simulate Incidents
     if (this.forcedIncident && nextState.incidents.length === 0) {

@@ -9,7 +9,7 @@ export interface CrowdCardProps {
 export function CrowdCard({ crowd, isLoading = false }: CrowdCardProps) {
   if (isLoading) return <div className="animate-pulse bg-black/5 dark:bg-white/5 p-6 rounded-2xl h-48"></div>;
   return (
-    <div className="bg-background border border-black/10 dark:border-white/10 p-6 rounded-2xl">
+    <div className="bg-background border border-black/10 dark:border-white/10 p-6 rounded-2xl" aria-label="Crowd Status">
       <h3 className="font-bold mb-4 flex items-center gap-2">
         <span className="material-symbols-rounded">groups</span>
         Crowd Density
