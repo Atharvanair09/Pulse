@@ -148,14 +148,40 @@ export interface TimelineEvent {
   status?: "completed" | "current" | "upcoming";
 }
 
+export interface PointOfInterest {
+  id: string;
+  name: string;
+  type: "Gate" | "Facility" | "Parking" | "Zone" | "Transport";
+  coordinates: Coordinates;
+  zoneId: string;
+  status: string;
+  description?: string;
+  accessibilitySupported?: boolean;
+  queueLength?: number;
+  estimatedWait?: number;
+  crowdDensity?: DensityLevel;
+  recommendation?: string;
+}
+
 export interface Route {
-  origin: Coordinates;
-  destination: Coordinates;
+  id: string;
+  name: string;
+  from: Coordinates;
+  to: Coordinates;
+  path: Coordinates[]; // Array of points for rendering polyline
   distance: number;
-  duration: number; // minutes
-  accessibilitySupported: boolean;
-  crowdScore: number;
-  routeType: RouteType;
+  walkingTime: number; // minutes
+  congestion: number;
+  accessibility: boolean;
+  confidence: ConfidenceLevel;
+  recommendation: string;
+  expectedArrival: string;
+  
+  // Legacy fields for backward compatibility where needed, optional
+  duration?: number; 
+  crowdScore?: number;
+  accessibilitySupported?: boolean;
+  routeType?: RouteType;
 }
 
 export interface Prediction {
